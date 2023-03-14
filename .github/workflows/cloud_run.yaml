@@ -49,7 +49,10 @@ jobs:
           --quiet \
           --config cloudbuild.yaml \
           --substitutions _BASIC_AUTH_USERNAME=$BASIC_AUTH_USERNAME,_BASIC_AUTH_PASSWORD=$BASIC_AUTH_PASSWORD,_IMAGE_TAG=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-
+    
+    - name: Push Container
+      run: |-
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
     # Deploy image to Cloud Run
     - name: Deploy
       run: |-
